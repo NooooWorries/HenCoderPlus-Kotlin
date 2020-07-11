@@ -9,7 +9,10 @@ import java.util.*
 
 class LessonPresenter(private val activity: LessonActivity) {
     private var lessons: List<Lesson> = ArrayList()
-    private val type = object : TypeToken<List<Lesson?>?>() {}.type
+    private val type by lazy {
+        object : TypeToken<List<Lesson?>?>() {}.type
+    }
+
     fun fetchData() {
         HttpClient.INSTANCE[LESSON_PATH, type, object : EntityCallback<List<Lesson>> {
             override fun onSuccess(entity: List<Lesson>) {

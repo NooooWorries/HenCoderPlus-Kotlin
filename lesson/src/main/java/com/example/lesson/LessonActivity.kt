@@ -15,22 +15,31 @@ import com.example.lesson.entity.Lesson
 import kotlinx.android.synthetic.main.activity_lesson.*
 
 class LessonActivity : AppCompatActivity(), BaseView<LessonPresenter?>, Toolbar.OnMenuItemClickListener {
-    override val presenter = LessonPresenter(this)
+    override val presenter by lazy {
+        LessonPresenter(this)
+    }
 
     private val lessonAdapter = LessonAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lesson)
 
-        toolbar.inflateMenu(R.menu.menu_lesson)
-        toolbar.setOnMenuItemClickListener(this)
+        toolbar.run {
+            inflateMenu(R.menu.menu_lesson)
+            setOnMenuItemClickListener(this@LessonActivity)
+        }
 
-        list.layoutManager = LinearLayoutManager(this)
-        list.adapter = lessonAdapter
-        list.addItemDecoration(DividerItemDecoration(this, LinearLayout.VERTICAL))
+        list.run {
+            layoutManager = LinearLayoutManager(this@LessonActivity)
+            adapter = lessonAdapter
+            addItemDecoration(DividerItemDecoration(this@LessonActivity, LinearLayout.VERTICAL))
+        }
 
-        swipe_refresh_layout.setOnRefreshListener { presenter.fetchData() }
-        swipe_refresh_layout.isRefreshing = true
+        swipe_refresh_layout.run {
+            setOnRefreshListener { presenter.fetchData() }
+            isRefreshing = true
+        }
+
         presenter.fetchData()
     }
 

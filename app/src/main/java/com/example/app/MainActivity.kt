@@ -20,10 +20,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        et_username.setText(CacheUtils.get(usernameKey))
-        et_password.setText(CacheUtils.get(passwordKey))
+        et_username.setText(CacheUtils[usernameKey])
+        et_password.setText(CacheUtils[passwordKey])
         btn_login.setOnClickListener(this)
         code_view.setOnClickListener(this)
+
+        val user = User()
+        val copy = user.copy()
+        println(user == copy)
+        println(user === copy)
     }
 
     override fun onClick(v: View) {

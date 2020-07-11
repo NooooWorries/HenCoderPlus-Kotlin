@@ -12,22 +12,8 @@ import com.example.app.R
 import com.example.core.utils.Utils
 import java.util.*
 
-class CodeView : AppCompatTextView {
-    constructor(context: Context): this(context, null)
-
-    constructor(context: Context, attributeSet: AttributeSet?): super(context, attributeSet) {
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
-        gravity = Gravity.CENTER
-        setBackgroundColor(getContext().getColor(R.color.colorPrimary))
-        setTextColor(Color.WHITE)
-
-        paint.isAntiAlias = true
-        paint.style = Paint.Style.STROKE
-        paint.color = getContext().getColor(R.color.colorAccent)
-        paint.strokeWidth = Utils.dp2px(6f)
-
-        updateCode()
-    }
+class CodeView constructor(context: Context, attributeSet: AttributeSet?):
+        AppCompatTextView(context, attributeSet) {
 
     private val paint = Paint()
 
@@ -41,6 +27,20 @@ class CodeView : AppCompatTextView {
             "retrofit",
             "tcp/ip"
     )
+
+    init {
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+        gravity = Gravity.CENTER
+        setBackgroundColor(getContext().getColor(R.color.colorPrimary))
+        setTextColor(Color.WHITE)
+
+        paint.isAntiAlias = true
+        paint.style = Paint.Style.STROKE
+        paint.color = getContext().getColor(R.color.colorAccent)
+        paint.strokeWidth = Utils.dp2px(6f)
+
+        updateCode()
+    }
 
     fun updateCode() {
         val random = Random().nextInt(codeList.size)
